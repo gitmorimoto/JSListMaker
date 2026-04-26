@@ -1,0 +1,56 @@
+連想配列を要素とした配列の書き方はjavascript ではどのようにするか
+
+JavaScriptでは「連想配列」という言い方をしますが、実体は**オブジェクト（{}）**です。
+なので「連想配列を要素とした配列」はつまり👇
+
+オブジェクトの配列
+
+✅ 基本の書き方
+const data = [
+  { a: 'x', b: 'y', c: 'z' },
+  { a: 'p', b: 'q', c: 'r' },
+  { a: 'm', b: 'n', c: 'o' }
+];
+✅ 使い方
+① 配列としてループ
+data.forEach(item => {
+  console.log(item);
+});
+② キーと値を取り出す
+data.forEach(item => {
+  Object.entries(item).forEach(([key, value]) => {
+    console.log(key, value);
+  });
+});
+③ 特定の値にアクセス
+console.log(data[0].a); // x
+console.log(data[1].b); // q
+✅ JSON形式との関係
+
+同じデータはJSONだとこう👇
+
+[
+  { "a": "x", "b": "y", "c": "z" },
+  { "a": "p", "b": "q", "c": "r" }
+]
+
+👉 JavaScriptで使うときは
+
+const data = JSON.parse(jsonString);
+⚠️ よくある間違い
+❌ NG（配列っぽく見えるが違う）
+const data = [
+  ['a', 'x'],
+  ['b', 'y']
+];
+
+👉 これは「配列の配列」であって連想配列ではない
+
+❌ NG（JSONとして不正）
+[
+  { a: 'x', b: 'y' } // ← JSONではダメ（ダブルクォート必須）
+]
+✔ まとめ
+JavaScriptの連想配列 = オブジェクト {}
+配列に入れる → [{...}, {...}]
+JSONとは似ているがルールが少し違う

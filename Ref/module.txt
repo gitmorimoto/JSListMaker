@@ -1,0 +1,51 @@
+基本の考え方
+export：外に公開する
+import：他のファイルから読み込む
+🔸 ① モジュールを作る（export）
+
+例えば math.js というファイル👇
+
+// math.js
+
+export function add(a, b) {
+    return a + b;
+}
+
+export const PI = 3.14;
+🔸 ② 別ファイルで使う（import）
+// main.js
+
+import { add, PI } from './math.js';
+
+console.log(add(2, 3)); // 5
+console.log(PI);        // 3.14
+🔸 ③ HTMLから読み込むとき（重要！）
+<script type="module" src="main.js"></script>
+
+👉 type="module" を付けないと動きません
+
+🔹 よく使う書き方パターン
+✔ デフォルトエクスポート
+
+1つだけメインで出したいとき👇
+
+// greet.js
+export default function greet() {
+    console.log("Hello!");
+}
+// main.js
+import greet from './greet.js';
+greet();
+✔ まとめて読み込む
+import * as math from './math.js';
+
+console.log(math.add(1, 2));
+console.log(math.PI);
+🔹 注意点（ここ大事）
+ファイルパスは 必ず ./ を付ける
+ブラウザで使う場合は
+👉 ローカルファイル（file://）だと動かないことがある
+→ 簡単なサーバーを使う（VSCodeのLive Serverなど）
+🔹 よくあるエラー
+Uncaught SyntaxError: Cannot use import statement
+→ type="module" がない
